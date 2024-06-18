@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-// import Navbar from "../components/Navbar"
+import Navbar from "../components/Navbar"
 // import Footer from "../components/Footer"
 import Head from "next/head";
 import Image from "next/image";
@@ -29,6 +29,10 @@ export default function App({ Component, pageProps }) {
         waitingTime={400}
         onLoaderFinished={() => setProgress(0)}
       />
+      <Head>
+        <meta name="viewport" content="width=device-width , initial-scale=1.0 , minimum-scale=1.0" />
+      </Head>
+      <Navbar/>
       {/* <main className="flex flex-col items-center justify-between">
         <div className="relative w-full">
           <div className="absolute -z-10 w-full">
