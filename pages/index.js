@@ -5,7 +5,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <div className="relative w-full h-screen overflow-hidden min-h-screen">
       <div className="absolute inset-0">
         <Image
           src="/vit_bg.png"
@@ -16,10 +16,23 @@ export default function Home() {
           quality={100}
         />
       </div>
-      <div className="relative z-10 flex flex-col items-center justify-center w-full h-full text-center text-white">
-        <h1 className="text-4xl font-bold">VIT Transport</h1>
-        <p className="mt-4 text-lg">This is a sample text.</p>
-        <p className="mt-4 text-lg">Contact Helpdesk.</p>
+      <div className="relative z-10 flex flex-col md:flex-row items-center justify-center h-full w-full p-4 overflow-hidden">
+      <div className="flex flex-col text-white mb-8 md:mr-32">
+          <div className="text-2xl md:text-6xl font-bold text-center md:text-left">
+            <p>TRANSPORT</p>
+            <p className="mt-2 md:ml-8">HELPLINE</p>
+            <hr className="mt-4 border-2 w-20 md:w-40" />
+            <p className="mt-4 text-lg md:text-2xl">+91 90035 55258</p>
+          </div>
+        </div>
+        <div className="flex items-center justify-center">
+          <div className="w-full md:w-3/4 bg-black bg-opacity-50 p-4 rounded-lg text-white max-h-full overflow-y-auto mb-12">
+            <span className="block text-2xl md:text-4xl font-bold mb-4 text-center md:text-left">UPDATES</span>
+            <ul className="list-disc pl-5 space-y-2">
+              <li>Buses will leave at 4:00pm today due to bad weather</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   );
