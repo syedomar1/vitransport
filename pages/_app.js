@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import LoadingBar from 'react-top-loading-bar'
+import Footer from "@/components/Footer";
 
 
 export default function App({ Component, pageProps }) {
@@ -33,14 +34,8 @@ export default function App({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width , initial-scale=1.0 , minimum-scale=1.0" />
       </Head>
       <Navbar/>
-      {/* <main className="flex flex-col items-center justify-between">
-        <div className="relative w-full">
-          <div className="absolute -z-10 w-full">
-          <Image src="/vit_bg.png" alt="Background Img" layout="fill" objectFit="cover" />
-          </div>
-        </div>
-      </main> */}
     <Component {...pageProps} />
+    <Footer/>
     </>
   )
 }

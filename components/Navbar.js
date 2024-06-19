@@ -8,7 +8,7 @@ import { FiHome, FiCalendar, FiInfo, FiMapPin } from "react-icons/fi";
 const Navbar = () => {
   return (
     <>        
-    <div className="flex flex-col md:flex-row md:justify-between justify-center items-center py-2 px-4 shadow-md sticky top-0 bg-black bg-opacity-80 text-white z-10">
+    <div className="flex flex-col md:flex-row md:justify-between justify-center items-center py-2 px-4 shadow-md sticky top-0 bg-black bg-opacity-80 text-white z-20">
       <div className="logo m-auto md:mx-5 w-full max-w-[80px]">
         <Link href={"/"}>
           <Image src="/vit_logo.png" alt="Logo" height={30} width={80} className="w-[120px] h-[50px]"/>
