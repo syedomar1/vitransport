@@ -1,12 +1,11 @@
 import "@/styles/globals.css";
 import Navbar from "../components/Navbar"
-// import Footer from "../components/Footer"
+import Footer from "../components/Footer"
 import Head from "next/head";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import LoadingBar from 'react-top-loading-bar'
-import Footer from "@/components/Footer";
 
 
 export default function App({ Component, pageProps }) {
