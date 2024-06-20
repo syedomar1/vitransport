@@ -15,7 +15,7 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="nav">
-        <ul className="flex items-center space-x-8 mr-6 font-bold md:text-md justify-end">
+        <ul className="flex items-center space-x-6 mr-6 font-bold md:text-md justify-end">
           <Link href={"/"}>
             <li className="hover:text-blue-700 flex items-center space-x-2 transition-colors duration-200">
             <FiHome />
