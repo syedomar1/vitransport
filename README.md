@@ -1,40 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Getting Started with ViTransport App
 
-## Getting Started
+# Introduction
 
-First, run the development server:
+ViTransport is an optimized webapp, a one way solution for all related functionalitites of Transportation Department of Vellore Institute of Technology, Chennai. It is designed to address the needs of individuals to avoid early morning hastles. Leveraging the advancements in internet technology, ViTransport aims to deliver daily routine bus schedule with all the necessary details in one app. Which also consist of tracking of the route which the bus is travelling for new college transportaion. This README file provides a comprehensive guide to using ViTransport, outlining its features, functionalities, and how to get started.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ViTransport offers a range of features to provide accessible transportation related solutions:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+| Feature                 | Description                                                                                                                              |
+|-------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| Important Updates       | Helps users to be notified at the earliest on any important, urgently required news which needs to be delivered to students or faculties.|
+| Transport Helpline      | Students and bus users are given acces to helpline number in case of any issues.                                                         |
+| Schedule                | Facilitates daily schedule, displays bus timing for each stop, filters according to timing whichever bus route no. is available at that particular time.|
+| General Information     | Users can choose their bus no. Provides comprehensive information on bus transport incharge, bus route no. and various other details.    |
+| Tracking System         | Offers static map which displays the route for each bus, also personalized bus route displaying specific path alone taken by the bus     |
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Installation
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+To use ViTransport, follow these steps:
+### `npm run dev`
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+# How to Contribute
 
-## Learn More
+Contributions to this project are always welcome! If you would like to contribute, please follow these steps:
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Fork the repository
+1. Clone the repository to your local machine
+1. Create a new branch for your feature or bug fix
+1. Make your changes and commit them with descriptive commit messages
+1. Push your changes to your fork
+1. Create a pull request to the main repository
