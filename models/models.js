@@ -1,28 +1,20 @@
-const mongoose = require('mongoose');
+// models/models.js
+import mongoose from 'mongoose';
 
-const { Schema } = mongoose;
-
-// Define Stop Schema
-const StopSchema = new Schema({
-    name: String,
-    time: String,
-    coordinates: {
-        type: { type: String, default: "Point" },
-        coordinates: [Number] // [longitude, latitude]
-    }
+const StopSchema = new mongoose.Schema({
+    stop_id: String,
+    stop_name: String,
+    stop_lat: Number,
+    stop_lon: Number,
 });
 
-// Define Bus Route Schema
-const BusRouteSchema = new Schema({
-    routeNumber: String,
-    stops: [StopSchema]
+const BusRouteSchema = new mongoose.Schema({
+    route_id: String,
+    route_name: String,
+    stops: [String],
 });
 
-// Index for geospatial queries
-StopSchema.index({ coordinates: '2dsphere' });
+const StopModel = mongoose.models.Stop || mongoose.model('Stop', StopSchema);
+const BusRouteModel = mongoose.models.BusRoute || mongoose.model('BusRoute', BusRouteSchema);
 
-// Create models
-const StopModel = mongoose.model('Stop', StopSchema);
-const BusRouteModel = mongoose.model('BusRoute', BusRouteSchema);
-
-module.exports = { StopModel, BusRouteModel };
+export { StopModel, BusRouteModel };

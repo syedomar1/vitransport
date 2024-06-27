@@ -1,15 +1,10 @@
-// data.js
-
+// lib/data.js
 const xlsx = require('xlsx');
 const fs = require('fs');
-const path = require('path');
 
-// Function to extract data from a sheet object
 function extractDataFromSheet(sheet) {
     const jsonData = xlsx.utils.sheet_to_json(sheet, { header: 1 });
-
     let extractedData = [];
-
     jsonData.forEach(row => {
         if (row.length > 0) {
             extractedData.push({
@@ -21,26 +16,21 @@ function extractDataFromSheet(sheet) {
             });
         }
     });
-
-    extractedData.splice(0, 2); // Remove first two entries
-
+    extractedData.splice(0, 2);
     return extractedData;
 }
 
 function splitValuesToArray(extractedData) {
     const result = [];
-
     for (const item of extractedData) {
         const key = Object.keys(item)[0];
         const value = item[key];
-
         if (typeof value === 'string') {
             result.push({ [key]: value.split(',') });
         } else {
             result.push({ [key]: value });
         }
     }
-
     return result;
 }
 
@@ -87,14 +77,12 @@ function extractDataFromSheet2(sheetData) {
             }
         }
     }
-
     return splitValuesToArray(extractedData);
 }
 
 function extractDataFromSheet3(sheetData) {
     const result = [];
     const numRows = sheetData['!ref'].split(':')[1].match(/\d+/)[0];
-    
     for (let i = 3; i <= numRows; i++) {
         const row = {};
         row['ROUTE NAME'] = sheetData[`A${i}`].v.trim();
@@ -102,15 +90,12 @@ function extractDataFromSheet3(sheetData) {
         row['GATE'] = sheetData[`C${i}`].v;
         result.push(row);
     }
-
     return result;
 }
 
 function extractDataFromSheet4(sheet) {
     const data = xlsx.utils.sheet_to_json(sheet, { header: 1 });
-
     const filteredData = data.filter(row => row.some(cell => cell !== ''));
-
     const routes = {};
     let currentRoute = '';
     for (let i = 0; i < filteredData.length; i++) {
@@ -133,7 +118,6 @@ function extractDataFromSheet4(sheet) {
             }
         }
     }
-
     const renamedRoutes = {};
     for (const key in routes) {
         if (Object.prototype.hasOwnProperty.call(routes, key)) {
@@ -141,46 +125,38 @@ function extractDataFromSheet4(sheet) {
             renamedRoutes[routeNumberAndLocation] = routes[key];
         }
     }
-
     return renamedRoutes;
 }
 
 function extractDataFromSheet5(sheetData) {
     const extractedData = {};
-
     const Name1 = sheetData.A2.v;
     const Phone1 = sheetData.B2.v;
     const Phone2 = sheetData.C2.v;
     extractedData[Name1] = [Phone1, Phone2];
-
     const Name2 = sheetData.A3.v;
     const Phone3 = sheetData.B3.v;
     const Phone4 = sheetData.C3.v;
     extractedData[Name2] = [Phone3, Phone4];
-
     return extractedData;
 }
 
-// Function to extract data from Excel file
 function DataExtraction(filePath, filePath2) {
     const fileData = fs.readFileSync(filePath);
     const workbook = xlsx.read(fileData, { type: 'buffer' });
+    let sheets = [];
+    sheets[0] = extractDataFromSheet(workbook.Sheets[workbook.SheetNames[0]]);
+    sheets[1] = extractDataFromSheet(workbook.Sheets[workbook.SheetNames[1]]);
+    sheets[2] = extractDataFromSheet2(workbook.Sheets[workbook.SheetNames[2]]);
+    sheets[3] = extractDataFromSheet(workbook.Sheets[workbook.SheetNames[3]]);
+    sheets[4] = extractDataFromSheet3(workbook.Sheets[workbook.SheetNames[4]]);
     const fileData2 = fs.readFileSync(filePath2);
     const workbook2 = xlsx.read(fileData2, { type: 'buffer' });
-
-    const sheets = [
-        extractDataFromSheet(workbook.Sheets[workbook.SheetNames[0]]),
-        extractDataFromSheet(workbook.Sheets[workbook.SheetNames[1]]),
-        extractDataFromSheet2(workbook.Sheets[workbook.SheetNames[2]]),
-        extractDataFromSheet(workbook.Sheets[workbook.SheetNames[3]]),
-        extractDataFromSheet3(workbook.Sheets[workbook.SheetNames[4]]),
-        extractDataFromSheet4(workbook2.Sheets[workbook2.SheetNames[0]]),
-        extractDataFromSheet4(workbook2.Sheets[workbook2.SheetNames[1]]),
-        extractDataFromSheet4(workbook2.Sheets[workbook2.SheetNames[2]]),
-        extractDataFromSheet4(workbook2.Sheets[workbook2.SheetNames[3]]),
-        extractDataFromSheet5(workbook2.Sheets[workbook2.SheetNames[4]])
-    ];
-
+    sheets[5] = extractDataFromSheet4(workbook2.Sheets[workbook2.SheetNames[0]]);
+    sheets[6] = extractDataFromSheet4(workbook2.Sheets[workbook2.SheetNames[1]]);
+    sheets[7] = extractDataFromSheet4(workbook2.Sheets[workbook2.SheetNames[2]]);
+    sheets[8] = extractDataFromSheet4(workbook2.Sheets[workbook2.SheetNames[3]]);
+    sheets[9] = extractDataFromSheet5(workbook2.Sheets[workbook2.SheetNames[4]]);
     return sheets;
 }
 
