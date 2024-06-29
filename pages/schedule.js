@@ -1,117 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, TextField, MenuItem, Tabs, Tab, Accordion, AccordionSummary, AccordionDetails, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { useData } from '../context/DataContext'; // Import the useData hook
 
 const Schedule = () => {
+  const { busRoutes, loading, error } = useData(); // Call the useData hook to access context values
+  const [busRoutesData, setBusRoutesData] = useState([]);
   const [selectedRoute, setSelectedRoute] = useState('');
-  const [selectedRouteStoppings, setSelectedRouteStoppings] = useState([]);
   const [selectedTiming, setSelectedTiming] = useState('');
+  const [selectedRouteStoppings, setSelectedRouteStoppings] = useState([]);
+
   const [activeAccordion, setActiveAccordion] = useState(null);
   const [tabIndex, setTabIndex] = useState(0);
 
-  const busData = {
-    "1 PADI SARAVANA": [
-      {
-        "SL.NO.": 1,
-        "NAME OF THE STOPPING": "PADI SARAVANA STORES",
-        "TIME A.M": "06.00AM"
-      },
-      {
-        "SL.NO.": 2,
-        "NAME OF THE STOPPING": "DUNLOP",
-        "TIME A.M": "06.05AM"
-      },
-      {
-        "SL.NO.": 3,
-        "NAME OF THE STOPPING": "AMBATTUR OT",
-        "TIME A.M": "06.10AM"
-      },
-      {
-        "SL.NO.": 4,
-        "NAME OF THE STOPPING": "VANDALUR ",
-        "TIME A.M": "07.30AM"
-      },
-      {
-        "SL.NO.": 5,
-        "NAME OF THE STOPPING": "VIT",
-        "TIME A.M": "07.45AM"
-      }
-    ],
-    "BUS ROUTE NO: 1A  THIRUMULLAIVAYAL": [
-      {
-        "SL.NO.": 1,
-        "NAME OF THE STOPPING": "THIRUMULLAIVAYAL",
-        "TIME A.M": "06.20AM"
-      },
-      {
-        "SL.NO.": 2,
-        "NAME OF THE STOPPING": "AVADI",
-        "TIME A.M": "06.25AM"
-      },
-      {
-        "SL.NO.": 3,
-        "NAME OF THE STOPPING": "PATTABIRAM ",
-        "TIME A.M": "06.35AM"
-      },
-      {
-        "SL.NO.": 4,
-        "NAME OF THE STOPPING": "NEMILICHERY ",
-        "TIME A.M": "06.40AM"
-      },
-      {
-        "SL.NO.": 5,
-        "NAME OF THE STOPPING": "VANDALUR ",
-        "TIME A.M": "07.25AM"
-      },
-      {
-        "SL.NO.": 6,
-        "NAME OF THE STOPPING": "VIT",
-        "TIME A.M": "07.45AM"
-      }
-    ],
-    "BUS ROUTE NO: 2   AYANAVARAM ": [
-      {
-        "SL.NO.": 1,
-        "NAME OF THE STOPPING": "AYANAVARAM",
-        "TIME A.M": "6.25AM"
-      },
-      {
-        "SL.NO.": 2,
-        "NAME OF THE STOPPING": "ESI HOSPITAL",
-        "TIME A.M": "6.30AM"
-      },
-      {
-        "SL.NO.": 3,
-        "NAME OF THE STOPPING": "KILPAUK GARDEN",
-        "TIME A.M": "6.40AM"
-      },
-      {
-        "SL.NO.": 4,
-        "NAME OF THE STOPPING": "ANNA NAGAR CHINTHAMANI",
-        "TIME A.M": "6.45AM"
-      },
-      {
-        "SL.NO.": 6,
-        "NAME OF THE STOPPING": "SHANTHI  COLANY",
-        "TIME A.M": "6.55AM"
-      },
-      {
-        "SL.NO.": 7,
-        "NAME OF THE STOPPING": "VANDALUR",
-        "TIME A.M": "7.40AM"
-      },
-      {
-        "SL.NO.": 8,
-        "NAME OF THE STOPPING": "VIT ",
-        "TIME A.M": "7.50AM"
-      }
-    ],
-  };
+  useEffect(() => {
+    if (busRoutes) {
+      setBusRoutesData(busRoutes);
+    }
+  }, [busRoutes]);
 
   const handleRouteChange = (event) => {
-    setSelectedRoute(event.target.value);
-    setSelectedRouteStoppings(busData[event.target.value] || []);
+    const route = event.target.value;
+    setSelectedRoute(route);
+    const selectedRouteData = busRoutesData.find(r => r.routeNumber === route);
+    setSelectedRouteStoppings(selectedRouteData ? selectedRouteData.stoppings : []);
   };
 
   const toggleAccordion = (index) => {
@@ -119,10 +32,22 @@ const Schedule = () => {
   };
 
   const handleStoppingChange = (event) => {
-    setSelectedTiming(event.target.value);
-    // Update busRoutesData based on selected timing
-    // For now, this part is simplified and does not fetch different data based on timing.
-    setSelectedRouteStoppings(busData[selectedRoute] || []);
+    const timing = event.target.value;
+    setSelectedTiming(timing);
+    switch (event.target.value) {
+      case 'MORNING':
+        setBusRoutesData(busdata[5]);
+        break;
+      case '1:45 PM':
+        setBusRoutesData(busdata[6]);
+        break;
+      case '5:00 PM':
+        setBusRoutesData(busdata[7]);
+        break;
+      case '6:00 PM':
+        setBusRoutesData(busdata[8]);
+        break;
+    }
   };
 
   const getCalendarDates = () => {
@@ -150,6 +75,10 @@ const Schedule = () => {
 
   const calendarDates = getCalendarDates();
 
+  if (!busRoutes || busRoutes.length === 0) {
+    return <div>No data available</div>;
+  }
+
   return (
     <div className="min-h-screen bg-darkBlue text-white">
       <div className="container mx-auto py-8 max-w-min">
@@ -162,25 +91,25 @@ const Schedule = () => {
             scrollButtons="auto"
             allowScrollButtonsMobile
             sx={{
-                marginBottom: 2,
-                '& .MuiTab-root': {
-                  fontWeight: 'bold',
-                  border: '1px dotted white',
-                  borderRadius: '8px',
-                  paddingInline: '25px',
-                  marginInline:'10px'
-                },
-                '& .Mui-selected': {
-                  backgroundColor: 'lightblue',
-                  color: 'black',
-                },
-              }}
+              marginBottom: 2,
+              '& .MuiTab-root': {
+                fontWeight: 'bold',
+                border: '1px dotted white',
+                borderRadius: '8px',
+                paddingInline: '25px',
+                marginInline: '10px'
+              },
+              '& .Mui-selected': {
+                backgroundColor: 'lightblue',
+                color: 'black',
+              },
+            }}
           >
             {calendarDates.map((date, index) => (
               <Tab
                 key={index}
                 label={date}
-                sx={{textFont:"bold", fontSize: '1rem', color: 'white', backgroundColor: index === tabIndex ? 'lightblue' : 'inherit' }}
+                sx={{ textFont: "bold", fontSize: '1rem', color: 'white', backgroundColor: index === tabIndex ? 'lightblue' : 'inherit' }}
               />
             ))}
           </Tabs>
@@ -240,9 +169,9 @@ const Schedule = () => {
                   style: { textAlign: 'center', color: 'white' },
                 }}
               >
-                {Object.keys(busData).map((routeName) => (
-                  <MenuItem key={routeName} value={routeName}>
-                    {routeName}
+                {busRoutes && busRoutes.map((route, index) => (
+                  <MenuItem key={index} value={route.routeNumber}>
+                    {route.routeNumber}
                   </MenuItem>
                 ))}
               </TextField>
@@ -276,9 +205,9 @@ const Schedule = () => {
                 }}
               >
                 <MenuItem value="MORNING">Morning</MenuItem>
-                <MenuItem value="1:45 PM">1:45 PM</MenuItem>
-                <MenuItem value="5:00 PM">5:00 PM</MenuItem>
-                <MenuItem value="6:00 PM">6:00 PM</MenuItem>
+                <MenuItem value="1:45PM">1:45 PM</MenuItem>
+                <MenuItem value="5:00PM">5:00 PM</MenuItem>
+                <MenuItem value="6:00PM">6:00 PM</MenuItem>
               </TextField>
             </Box>
             <hr style={{ width: '80%', margin: '3% 0', left: '10%' }} />
@@ -288,11 +217,12 @@ const Schedule = () => {
               expandIcon={activeAccordion === 0 ? <RemoveIcon /> : <AddIcon />}
               aria-controls="panel2-content"
               id="panel2-header"
-              sx={{ backgroundColor: 'white', color: '#71b1eb', textAlign: 'center' }}
+              sx={{ backgroundColor: '#71b1eb', color: 'black' }}
               onClick={() => toggleAccordion(0)}
             >
-              <Typography variant="subtitle1" sx={{ flexBasis: '50.00%' }}>{selectedRoute}</Typography>
-              <Typography variant="subtitle1" sx={{ flexBasis: '50.00%' }}>{selectedTiming}</Typography>
+              <Typography style={{ fontWeight: 'bold', fontSize: '1rem', marginBottom: '0rem' }}>
+                <span>{selectedRoute}</span>
+              </Typography>
             </AccordionSummary>
             <AccordionDetails style={{ color: '#71b1eb', marginBottom: '2rem' }}>
               <table className="table-fixed w-full text" style={{ textColor: "#71b1eb" }}>
@@ -304,13 +234,19 @@ const Schedule = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {selectedRouteStoppings.map((stopping, index) => (
-                    <tr key={index}>
-                      <td className="p-3 text-center">{stopping["SL.NO."]}</td>
-                      <td className="p-3 text-center">{stopping["NAME OF THE STOPPING"]}</td>
-                      <td className="p-3 text-center">{stopping["TIME A.M"]}</td>
+                  {Array.isArray(selectedRouteStoppings) && selectedRouteStoppings.length > 0 ? (
+                    selectedRouteStoppings.map((stopping, index) => (
+                      <tr key={index}>
+                        <td className="p-3 text-center">{selectedRoute}</td>
+                        <td className="p-3 text-center">{stopping.name}</td>
+                        <td className="p-3 text-center">{selectedTiming}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="3" className="p-3 text-center">No stoppings available for this route.</td>
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </AccordionDetails>
