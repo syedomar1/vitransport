@@ -1,60 +1,73 @@
-// pages/index.js
-import Image from "next/image";
+import { Button, Container, Typography, Card, CardContent, Grid } from '@mui/material';
 import { Inter } from "next/font/google";
-import { useData } from '../context/DataContext'; // Import the useData hook
-
+import Navbar from "@/components/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const { data, busRoutes, loading, error } = useData(); // Use the useData hook to access context values
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
   return (
-    <div className="relative w-full h-screen overflow-hidden min-h-screen">
-      <div className="absolute inset-0">
-        <Image
-          src="/vit_bg.png"
-          alt="Background Image"
-          layout="fill"
-          objectFit="cover"
-          className="blur-sm"
-          quality={100}
-        />
-      </div>
-      <div className="relative z-10 flex flex-col md:flex-row items-center justify-center h-full w-full p-4 overflow-hidden">
-        <div className="flex flex-col text-white mb-8 md:mr-32">
-          <div className="text-2xl md:text-6xl font-bold text-center md:text-left">
-            <p>TRANSPORT</p>
-            <p className="mt-2 md:ml-8">HELPLINE</p>
-            <hr className="mt-4 border-2 w-20 md:w-40" />
-            <p className="mt-4 text-lg md:text-2xl">+91 90035 55258</p>
-          </div>
+    <>
+      <Navbar />
+      <Container className="pt-24">
+        <div className="text-center mb-12">
+          <Typography variant="h2" component="h1" className="font-bold mb-4">
+            Welcome to VIT Transport Service
+          </Typography>
+          <Typography variant="h5" component="p" className="mb-4">
+            Your reliable solution for campus transportation
+          </Typography>
+          <Button variant="contained" color="primary" size="large" className="bg-blue-500 hover:bg-blue-700">
+            Get Started
+          </Button>
         </div>
-        <div className="flex items-center justify-center">
-          <div className="w-full md:w-3/4 bg-black bg-opacity-50 p-4 rounded-lg text-white max-h-full overflow-y-auto mb-12">
-            {/* <span className="block text-2xl md:text-4xl font-bold mb-4 text-center md:text-left">UPDATES</span> */}
-            {/* <ul className="list-disc pl-5 space-y-2">
-              <li>Buses will leave at 4:00pm today due to bad weather</li>
-              {busRoutes && busRoutes.length > 0 && (
-                <li>Fetched Bus Routes:</li>
-              )}
-              {busRoutes && busRoutes.map((route, index) => (
-                <li key={index}>{route.routeNumber}</li>
-              ))}
-            </ul>
-            <div>
-              {data && (
-                <div>
-                  <h2 className="text-2xl mt-4">Bus Data:</h2>
-                  <pre className="bg-gray-900 p-2 rounded">{JSON.stringify(data, null, 2)}</pre>
-                </div>
-              )}
-            </div> */}
-          </div>
-        </div>
-      </div>
-    </div>
+        
+        <Grid container spacing={4}>
+          <Grid item xs={12} sm={6} md={4}>
+            <Card>
+              <CardContent className="text-center">
+                <Typography variant="h5" component="h2" className="font-bold mb-4">
+                  Schedule
+                </Typography>
+                <Typography variant="body1" component="p" className="mb-4">
+                  View the bus schedules to plan your trips efficiently.
+                </Typography>
+                <Button variant="outlined" color="primary" href="/schedule">
+                  View Schedule
+                </Button>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <Card>
+              <CardContent className="text-center">
+                <Typography variant="h5" component="h2" className="font-bold mb-4">
+                  Timings
+                </Typography>
+                <Typography variant="body1" component="p" className="mb-4">
+                  Check the timings for various routes and stops.
+                </Typography>
+                <Button variant="outlined" color="primary" href="/timings">
+                  View Timings
+                </Button>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <Card>
+              <CardContent className="text-center">
+                <Typography variant="h5" component="h2" className="font-bold mb-4">
+                  Track
+                </Typography>
+                <Typography variant="body1" component="p" className="mb-4">
+                  Track the current location of the buses in real-time.
+                </Typography>
+                <Button variant="outlined" color="primary" href="/track">
+                  Track Now
+                </Button>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      </Container>
+    </>
   );
 }
