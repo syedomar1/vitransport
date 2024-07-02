@@ -1,13 +1,10 @@
 // pages/index.js
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import { useData } from '../context/DataContext'; // Import the useData hook
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const { data, busRoutes} = useData(); // Use the useData hook to access context values
-
   return (
     <div className="relative w-full h-screen overflow-hidden min-h-screen">
       <div className="absolute inset-0">
