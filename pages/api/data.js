@@ -10,10 +10,7 @@ export default async function handler(req, res) {
         const filePath = path.join(process.cwd(), 'data_routes', 'bus_locations.xlsx'); // Correct the path
 
         // Connect to MongoDB Atlas
-        await mongoose.connect(process.env.NEXT_PUBLIC_ATLASDB_URL, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
+        await mongoose.connect(process.env.NEXT_PUBLIC_ATLASDB_URL);
 
         // Fetch all bus routes from MongoDB
         const busRoutes = await BusRouteModel.find().lean();
